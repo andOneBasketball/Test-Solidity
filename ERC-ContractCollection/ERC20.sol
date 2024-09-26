@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT
-// WTF Solidity by 0xAA
-
 pragma solidity ^0.8.21;
 
 import "./IERC20.sol";
@@ -18,6 +16,7 @@ contract ERC20 is IERC20 {
     uint public totalSupplys;
     string public name;
     string public symbol;
+    uint8 public decimals = 18; // 小数位数
 
     mapping(address => uint) public balances;
     mapping(address => mapping(address => uint)) public allowances;
@@ -31,15 +30,19 @@ contract ERC20 is IERC20 {
 
     error insufficientBalance(address account, uint balance, uint amount);
 
+    // 查询代币总量
     function totalSupply() external view override returns (uint256) {
         return totalSupplys;
     }
 
+    // 查询余额
     function balanceOf(address account) external view override returns (uint256) {
         return balances[account];
     }
 
+    // 户主直接转账
     function transfer(address to, uint256 amount) external override returns (bool) {
+        require(to != address(this) && to != address(0), "ERC20: transfer to the contract address or zero address is not allowed");
         if (allowances[msg.sender][to] < amount) {
             revert insufficientBalance(to, allowances[msg.sender][to], amount);
         }
@@ -53,10 +56,12 @@ contract ERC20 is IERC20 {
         return true;
     }
 
+    // 查询授权
     function allowance(address owner, address spender) external view override returns (uint256) {
         return allowances[owner][spender];
     }
 
+    // 授权
     function approve(address spender, uint256 amount) external override returns (bool) {
         if (balances[msg.sender] < amount) {
             revert insufficientBalance(msg.sender, balances[msg.sender], amount);
@@ -66,7 +71,9 @@ contract ERC20 is IERC20 {
         return true;
     }
 
+    // 转账
     function transferFrom(address from, address to, uint256 amount) external override returns (bool) {
+        require(to != address(this) && to != address(0), "ERC20: transfer to the contract address or zero address is not allowed");
         if (allowances[from][to] < amount) {
             revert insufficientBalance(from, allowances[from][to], amount);
         }
@@ -77,12 +84,14 @@ contract ERC20 is IERC20 {
         return true;
     }
 
+    // 铸币
     function mint(uint amount) external {
         totalSupplys += amount;
         balances[msg.sender] += amount;
         emit Transfer(address(0), msg.sender, amount);
     }
 
+    // 销币
     function burn(uint amount) external {
         if (balances[msg.sender] < amount) {
             revert insufficientBalance(msg.sender, balances[msg.sender], amount);

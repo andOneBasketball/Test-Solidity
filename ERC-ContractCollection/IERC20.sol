@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT
-// WTF Solidity by 0xAA
-
 pragma solidity ^0.8.21;
 
 /**
