@@ -8,8 +8,8 @@ pragma solidity 0.8.27;
 3. ecrecover(hash(message), signature) == signer
 
 ethereum.enable()
-account = "0xe16C1623c1AA7D919cd2241d8b36d9E79C1Be2A2"
-hash = "0x1bf2c0ce4546651a1a2feb457b39d891a6b83931cc2454434f39961345ac378c"   (getMessageHash的返回值)
+account = "0x5639Bc2D96c7bA37EECA625599B183241A2bBE6c"
+hash = "0x1bf2c0ce4546651a1a2feb457b39d891a6b83931cc2454434f39961345ac378c"   //(getMessageHash的返回值)
 ethereum.request({method: "personal_sign", params: [account, hash]})
 
 编写一个智能合约，实现以下功能：
