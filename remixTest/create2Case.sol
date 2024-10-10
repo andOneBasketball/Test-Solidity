@@ -40,4 +40,8 @@ contract Create2Factory {
         bytes memory bytecode = type(DeployWithCreate2).creationCode;
         return abi.encodePacked(bytecode, abi.encode(_owner));
     }
+
+    function getKeccak256(address a, address b) public pure returns(bytes32) {
+        return keccak256(abi.encodePacked(a, b));
+    }
 }

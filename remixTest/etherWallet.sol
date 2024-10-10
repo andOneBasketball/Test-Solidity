@@ -9,7 +9,7 @@ pragma solidity 0.8.27;
 3. 合约中有一个函数可以返回当前存储的以太币余额。
 */
 
-contract etherWallet {
+contract EtherWallet {
     address public owner;
 
     constructor() {

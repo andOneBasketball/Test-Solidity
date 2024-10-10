@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.27;
 
-contract revertCase {
+contract RevertCase {
     uint public count = 0;
 
     error MyError(string message);
