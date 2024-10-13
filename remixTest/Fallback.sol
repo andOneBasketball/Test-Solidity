@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.27;
 
+// 验证msg.data的组成
+// msg.data = 函数选择器 + abi.encode(参数值1，参数值2)
+// 函数选择器 = 4字节的函数签名的前4字节 bytes4(keccak256("nonFixedSizeParamSelector(uint256[],string)"))  等价于 bytes4(abi.encodeWithSignature("nonFixedSizeParamSelector(uint256[],string)", a, b))
+
 contract Fallback {
     uint public num;
     address public sender;
@@ -36,10 +40,11 @@ contract B {
         );
     }
 
-    function callNotExistFun(address _addr, uint _num) external payable{
+    function callNotExistFun(address _addr, uint _num) external payable returns(bytes4){
         // call setVars()
         (bool success, bytes memory data) = _addr.call(
             abi.encodeWithSignature("callNotExistFun(uint256)", _num)
         );
+        return bytes4(abi.encodeWithSignature("callNotExistFun(uint256)", _num));
     }
 }
