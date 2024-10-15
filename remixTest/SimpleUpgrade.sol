@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-// 该范例只是简单模拟可升级合约，实际中的可升级合约需要考虑权限问题（透明代理，管理员用户仅允许调用 upgradeContract，具体参考 Openzeppelin 的 TransparentUpgradeableProxy 合约）、选择器冲突问题（参考 OpenZeppelin 的 UUPSUpgradeable 合约）
+// 该范例只是简单模拟可升级合约，实际中的可升级合约需要考虑权限问题、选择器冲突问题
+// 透明代理，管理员用户仅允许调用 upgradeContract，具体参考 Openzeppelin 的 TransparentUpgradeableProxy 合约，核心在于仅允许管理员调用代理合约的合约升级函数，非管理员调用代理合约的执行函数
+// 通用可升级代理，参考 OpenZeppelin 的 UUPSUpgradeable 合约，核心在于调用逻辑合约的函数来实现合约地址升级
 
 // 实现一个简单的可升级合约
 // 合约的变量存储必须保持一致
